@@ -1,0 +1,31 @@
+<h3>Preguntas encontradas</h3>
+<% if ( search ) { %>
+<div>(Filtro de búsqueda aplicado: <i><%= search %></i>)</div>
+<% } %>
+<table width="100%">
+<%  for ( var i = 0; i < quizes.length; i++ ) { %>
+	<tr>
+		<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
+		<% if ( session.user ) { %>
+		<td><a href="/quizes/<%= quizes[i].id %>/edit"><button>Editar</button></a></td>
+		<td>
+			<form method="post" action="/quizes/<%= quizes[i].id%>?_method=delete">
+				<button type="submit" onClick="return confirm('¿Borrar pregunta &quot;<%= quizes[i].pregunta %>&quot;?');">
+					Borrar
+				</button>
+			</form>
+		</td>
+		<% } %>
+	</tr>
+<%  } %>
+</table>
+<div>
+	<form action="/quizes">
+		Filtar por pregunta:
+		<input type="text" name="search" value="" />
+		<input type="submit" value="Buscar" />
+	</form>
+</div>
+<% if ( session.user ) { %>
+<a href="/quizes/new"><button type="button">Crear pregunta</button></a>
+<% } %>
